@@ -1,0 +1,13 @@
+<div>
+    <div class="row">
+        <div ng-repeat="person in persons" class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="../images/{{person.picture}}.jpg" alt={{person.picture}} style="width: 242px; height: 200px">
+                <div class="caption">
+                    <h3>{{person.name}}</h3>
+                    <p><a class="btn" role="button" ng-click="dislike(person.id)"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> {{person.score}}</a> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

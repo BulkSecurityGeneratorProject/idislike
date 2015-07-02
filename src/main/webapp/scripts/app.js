@@ -119,9 +119,16 @@ idislikeApp
                         authorizedRoles: [USER_ROLES.admin]
                     }
                 })
-                .otherwise({
+                .when('/main', {
                     templateUrl: 'views/main.html',
                     controller: 'MainController',
+                    access: {
+                        authorizedRoles: [USER_ROLES.all]
+                    }
+                })
+                .otherwise({
+                    templateUrl: 'views/home.html',
+                    controller: 'personController',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }

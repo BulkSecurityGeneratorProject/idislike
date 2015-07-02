@@ -15,4 +15,16 @@ idislikeApp
                         authorizedRoles: [USER_ROLES.all]
                     }
                 })
+                .when('/home', {
+                    templateUrl: 'views/home.html',
+                    controller: 'PersonController',
+                    resolve:{
+                        resolvedPerson: ['Person', function (Person) {
+                            return Person.query().$promise;
+                        }]
+                    },
+                    access: {
+                        authorizedRoles: [USER_ROLES.all]
+                    }
+                })
         });

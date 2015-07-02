@@ -25,6 +25,11 @@ idislikeApp.controller('PersonController', function ($scope, resolvedPerson, Per
                 });
         };
 
+        $scope.dislike = function (id) {
+            $scope.person = Person.get({id: id});
+            $scope.person.score =+ 1;
+        };
+
         $scope.clear = function () {
             $scope.person = {name: null, picture: null, score: null, id: null};
         };

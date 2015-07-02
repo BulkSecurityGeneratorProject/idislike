@@ -19,6 +19,10 @@
             <column name="picture" type="varchar(255)"/>
             <column name="score" type="bigint"/>
         </createTable>
-        
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/persons.csv"
+                  separator=";"
+                  tableName="T_PERSON"/>
     </changeSet>
 </databaseChangeLog>
