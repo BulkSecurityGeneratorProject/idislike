@@ -1,11 +1,11 @@
 <div>
     <div class="row">
-        <div ng-repeat="person in persons" class="col-sm-6 col-md-4">
+        <div ng-repeat="person in persons" class="col-sm-4 col-md-3">
             <div class="thumbnail">
-                <img src="../images/{{person.picture}}.jpg" alt={{person.picture}} style="width: 242px; height: 200px">
+                <img src="../images/{{person.picture}}.jpg" alt={{person.picture}} style="width: 180px; height: 180px; margin-top: 5px">
                 <div class="caption">
                     <h3>{{person.name}}</h3>
-                    <div ng-repeat="topic in person.topics"> {{topic.name}} </div>
+                    <!--<div ng-repeat="topic in person.topics"> {{topic.name}} </div>-->
                     <p><a class="btn" role="button" ng-click="dislike(person)">
                         <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> {{person.score}}</a>
                     </p>

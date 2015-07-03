@@ -2,7 +2,9 @@ package com.idislike.core.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.idislike.core.domain.Person;
+import com.idislike.core.domain.Topic;
 import com.idislike.core.repository.PersonRepository;
+import com.idislike.core.repository.TopicRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,9 @@ public class PersonResource {
 
     @Inject
     private PersonRepository personRepository;
+
+    @Inject
+    private TopicRepository topicRepository;
 
     /**
      * POST  /rest/persons -> Create a new person.
@@ -61,6 +66,18 @@ public class PersonResource {
                 person,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    /**
+     * GET  /rest/persons/:id -> get the "id" person.
+     */
+    @RequestMapping(value = "/rest/persons/topics/{topic}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Person> getByTopic(@PathVariable String topic) {
+        log.debug("REST request to get Person by topic: {}", topic);
+        return personRepository.findByTopics(topicRepository.findByName(topic));
     }
 
     /**

@@ -62,6 +62,13 @@ idislikeApp
                         authorizedRoles: [USER_ROLES.all]
                     }
                 })
+                .when('/topics/:topic', {
+                    templateUrl: 'views/home.html',
+                    controller: 'TopicController',
+                    access: {
+                        authorizedRoles: [USER_ROLES.all]
+                    }
+                })
                 .otherwise({
                     templateUrl: 'views/home.html',
                     controller: 'PersonController',

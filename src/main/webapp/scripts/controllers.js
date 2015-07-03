@@ -40,7 +40,30 @@ idislikeApp.controller('PersonController', function ($scope, $http, resolvedPers
     };
 });
 
-idislikeApp.controller('MainController', function ($scope) {
+idislikeApp.controller('TopicController', function ($scope, $routeParams, $http, Person) {
+
+    $scope.topic = $routeParams.topic;
+
+    $scope.persons = Person.getByTopic({topic : $scope.topic});
+
+    $scope.dislike = function (person) {
+        $http.put('app/rest/persons/' +  person.id)
+            .success(function (data, status, headers, config) {
+                person.score += 1;
+
+            }).error(function (data, status, headers, config) {
+                console.log("dislike failed")
+            });
+    };
+
+});
+
+//Controller de la page index
+idislikeApp.controller('MainController', function ($scope, Topic) {
+
+    $scope.topics = Topic.query();
+
+
     });
 
 idislikeApp.controller('AdminController', function ($scope) {

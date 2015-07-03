@@ -21,6 +21,14 @@ idislikeApp.factory('LanguageService', function ($http, $translate, LANGUAGES) {
 idislikeApp.factory('Person', function ($resource) {
     return $resource('app/rest/persons/:id', {}, {
         'query': { method: 'GET', isArray: true},
+        'get': { method: 'GET'},
+        'getByTopic': {method: 'GET', url: 'app/rest/persons/topics/:topic', isArray: true}
+    });
+});
+
+idislikeApp.factory('Topic', function ($resource) {
+    return $resource('app/rest/topics/:id', {}, {
+        'query': { method: 'GET', isArray: true},
         'get': { method: 'GET'}
     });
 });
