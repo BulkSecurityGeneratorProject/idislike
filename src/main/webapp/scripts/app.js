@@ -2,81 +2,30 @@
 
 /* App Module */
 
-var idislikeApp = angular.module('idislikeApp', ['http-auth-interceptor', 'tmh.dynamicLocale',
-    'ngResource', 'ngRoute', 'ngCookies', 'idislikeAppUtils', 'pascalprecht.translate', 'truncate']);
+var idislikeApp = angular.module('idislikeApp', [
+    'http-auth-interceptor',
+    'idislike.cst',
+    'tmh.dynamicLocale',
+    'ngResource',
+    'ngRoute',
+    'ngCookies',
+    'idislikeAppUtils',
+    'pascalprecht.translate',
+    'idislike.admin',
+    'idislike.user',
+    'truncate']);
 
 idislikeApp
     .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES) {
             $routeProvider
-                .when('/register', {
-                    templateUrl: 'views/register.html',
-                    controller: 'RegisterController',
-                    access: {
-                        authorizedRoles: [USER_ROLES.all]
-                    }
-                })
-                .when('/activate', {
-                    templateUrl: 'views/activate.html',
-                    controller: 'ActivationController',
-                    access: {
-                        authorizedRoles: [USER_ROLES.all]
-                    }
-                })
-                .when('/login', {
-                    templateUrl: 'views/login.html',
-                    controller: 'LoginController',
-                    access: {
-                        authorizedRoles: [USER_ROLES.all]
-                    }
-                })
                 .when('/error', {
                     templateUrl: 'views/error.html',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }
                 })
-                .when('/settings', {
-                    templateUrl: 'views/settings.html',
-                    controller: 'SettingsController',
-                    access: {
-                        authorizedRoles: [USER_ROLES.user]
-                    }
-                })
-                .when('/password', {
-                    templateUrl: 'views/password.html',
-                    controller: 'PasswordController',
-                    access: {
-                        authorizedRoles: [USER_ROLES.user]
-                    }
-                })
-                .when('/sessions', {
-                    templateUrl: 'views/sessions.html',
-                    controller: 'SessionsController',
-                    resolve:{
-                        resolvedSessions:['Sessions', function (Sessions) {
-                            return Sessions.get();
-                        }]
-                    },
-                    access: {
-                        authorizedRoles: [USER_ROLES.user]
-                    }
-                })
-                .when('/metrics', {
-                    templateUrl: 'views/metrics.html',
-                    controller: 'MetricsController',
-                    access: {
-                        authorizedRoles: [USER_ROLES.admin]
-                    }
-                })
-                .when('/health', {
-                    templateUrl: 'views/health.html',
-                    controller: 'HealthController',
-                    access: {
-                        authorizedRoles: [USER_ROLES.admin]
-                    }
-                })
                 .when('/configuration', {
-                    templateUrl: 'views/configuration.html',
+                    templateUrl: 'views/admin/configuration.html',
                     controller: 'ConfigurationController',
                     resolve:{
                         resolvedConfiguration:['ConfigurationService', function (ConfigurationService) {
@@ -84,26 +33,7 @@ idislikeApp
                         }]
                     },
                     access: {
-                        authorizedRoles: [USER_ROLES.admin]
-                    }
-                })
-                .when('/logs', {
-                    templateUrl: 'views/logs.html',
-                    controller: 'LogsController',
-                    resolve:{
-                        resolvedLogs:['LogsService', function (LogsService) {
-                            return LogsService.findAll();
-                        }]
-                    },
-                    access: {
-                        authorizedRoles: [USER_ROLES.admin]
-                    }
-                })
-                .when('/audits', {
-                    templateUrl: 'views/audits.html',
-                    controller: 'AuditsController',
-                    access: {
-                        authorizedRoles: [USER_ROLES.admin]
+                        authorizedRoles: [USER_ROLES.all]
                     }
                 })
                 .when('/logout', {
@@ -111,12 +41,6 @@ idislikeApp
                     controller: 'LogoutController',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
-                    }
-                })
-                .when('/docs', {
-                    templateUrl: 'views/docs.html',
-                    access: {
-                        authorizedRoles: [USER_ROLES.admin]
                     }
                 })
                 .when('/main', {
@@ -128,7 +52,12 @@ idislikeApp
                 })
                 .otherwise({
                     templateUrl: 'views/home.html',
-                    controller: 'personController',
+                    controller: 'PersonController',
+                    resolve:{
+                        resolvedPerson: ['Person', function (Person) {
+                            return Person.query().$promise;
+                        }]
+                    },
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }
