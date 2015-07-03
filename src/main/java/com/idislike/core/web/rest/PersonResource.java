@@ -14,9 +14,6 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * REST controller for managing Person.
- */
 @RestController
 @RequestMapping("/app")
 public class PersonResource {
@@ -76,5 +73,19 @@ public class PersonResource {
     public void delete(@PathVariable Long id) {
         log.debug("REST request to delete Person : {}", id);
         personRepository.delete(id);
+    }
+
+    /**
+     * PUT  /rest/persons/dislike/:id -> dislike the "id" person.
+     */
+    @RequestMapping(value = "/rest/persons/{id}",
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public void dislike(@PathVariable Long id) {
+        log.debug("REST request to delete Person : {}", id);
+        Person person = personRepository.getOne(id);
+        person.setScore(person.getScore() + 1);
+        personRepository.save(person);
     }
 }
