@@ -84,7 +84,7 @@ public class PersonResource {
     @Timed
     public void dislike(@PathVariable Long id) {
         log.debug("REST request to delete Person : {}", id);
-        Person person = personRepository.getOne(id);
+        Person person = personRepository.findOne(id);
         person.setScore(person.getScore() + 1);
         personRepository.save(person);
     }

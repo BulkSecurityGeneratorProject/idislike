@@ -20,9 +20,56 @@
             <column name="score" type="bigint"/>
         </createTable>
 
+        <createTable tableName="T_TOPIC">
+            <column name="name" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="T_PERSON_TOPIC">
+            <column name="id" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="id, name" tableName="T_PERSON_TOPIC"/>
+
+        <createIndex indexName="idx_person_topic"
+                     tableName="T_PERSON_TOPIC"
+                     unique="true">
+            <column name="id" type="varchar(50)"/>
+            <column name="name" type="varchar(50)"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="name"
+                                 baseTableName="T_PERSON_TOPIC"
+                                 constraintName="fk_topic_name"
+                                 referencedColumnNames="name"
+                                 referencedTableName="T_TOPIC"/>
+
+        <addForeignKeyConstraint baseColumnNames="id"
+                                 baseTableName="T_PERSON_TOPIC"
+                                 constraintName="fk_person_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_PERSON"/>
+
+
         <loadData encoding="UTF-8"
                   file="config/liquibase/persons.csv"
                   separator=";"
                   tableName="T_PERSON"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/topics.csv"
+                  separator=";"
+                  tableName="T_TOPIC"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/persons_topics.csv"
+                  separator=";"
+                  tableName="T_PERSON_TOPIC"/>
+
     </changeSet>
 </databaseChangeLog>

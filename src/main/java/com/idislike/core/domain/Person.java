@@ -1,10 +1,13 @@
 package com.idislike.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Person.
@@ -26,6 +29,13 @@ public class Person implements Serializable {
 
     @Column(name = "score")
     private Long score;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "T_PERSON_TOPIC",
+            joinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "name", referencedColumnName = "name")})
+    private Set<Topic> topics = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -57,6 +67,14 @@ public class Person implements Serializable {
 
     public void setScore(Long score) {
         this.score = score;
+    }
+
+    public Set<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(Set<Topic> topics) {
+        this.topics = topics;
     }
 
     @Override

@@ -25,10 +25,10 @@ idislikeApp.controller('PersonController', function ($scope, $http, resolvedPers
             });
     };
 
-    $scope.dislike = function (id) {
-        $http.put('rest/persons/' +  id)
+    $scope.dislike = function (person) {
+        $http.put('app/rest/persons/' +  person.id)
             .success(function (data, status, headers, config) {
-                console.log("dislike success")
+                person.score += 1;
 
             }).error(function (data, status, headers, config) {
                 console.log("dislike failed")
